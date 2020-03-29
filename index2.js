@@ -22,9 +22,6 @@ const server = http.createServer(basic.check((req, res) => {
                 user: req.user
             }));            
         }
-        else{
-            handleBadRequest(req, res);
-        }
         break;
     default:
         break;
