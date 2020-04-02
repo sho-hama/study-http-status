@@ -22,11 +22,22 @@ const server = http.createServer(basic.check((req, res) => {
                 user: req.user
             }));            
         }
+        else{
+            handleBadRequest(req, res);
+        }
         break;
     default:
         break;
     }
 }));
+
+function handleBadRequest(req, res) {
+    res.writeHead(400, {
+        'Content-Type': 'text/plain; charset=utf-8'
+    });
+    const message = "未対応のリクエストです。";
+    res.end('status code :' + res.statusCode + " " + message);
+}
 
 const port = 8000;
 server.listen(port, () => {
