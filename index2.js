@@ -26,11 +26,14 @@ const server = http.createServer(basic.check((req, res) => {
             handleBadRequest(req, res);
         }
         break;
+    case '/old-url' :
+        handleMovedPermanently(req, res);
     default:
         break;
     }
 }));
 
+    
 function handleBadRequest(req, res) {
     res.writeHead(400, {
         'Content-Type': 'text/plain; charset=utf-8'
@@ -38,7 +41,17 @@ function handleBadRequest(req, res) {
     const message = "未対応のリクエストです。";
     res.end('status code :' + res.statusCode + " " + message);
 }
-
+[
+function handleMovedPermanently(req, res) {    
+    res.writeHead(301, {
+        'Content-Type': 'text/html; charset=utf-8',
+        'Location' : '/top'
+    });
+   res.end('<!DOCTYPE html><html lang="jp"><body>' +
+            '<h1>新しいURLに移動しました</h1>' +
+            '<a href="/top">新しいほう</h1>' +
+            '</body></html>');
+}
 const port = 8000;
 server.listen(port, () => {
     console.info('Listening on ' + port);
